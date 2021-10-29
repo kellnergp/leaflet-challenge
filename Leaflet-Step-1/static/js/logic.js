@@ -1,24 +1,11 @@
 // define api url
 const url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
 
-// define variables
-/* var bBox;
-var features;
-var geometry;
-var ids;
-var properties; */
-
 // make api call
 d3.json(url).then(function(data) {
-    //console.log(data);
+    console.log(data);
 
-    // store values from data
-    //bBox = data.bbox;
-    //features = data.features;
-
-    //console.log(bBox);
-    //console.log(features);
-
+    // run marker creation function with the retrieved data
     createMarkers(data);
 });
 
@@ -29,6 +16,7 @@ function createMarkers(response) {
     // establish empty list for earthquake markers
     var quakeMarkers = [];
 
+    // iterate through each earthquake feature to generate a marker for it
     for (let i=0; i<features.length; i++) {
         // extract a series of relevant values for the earthquake as variables
         var quakeID = features[i].id;
@@ -62,7 +50,7 @@ function createMarkers(response) {
             fillOpacity: 0.8
         };
 
-        // set up marker for this feature
+        // set up marker for this feature with popup containing details
         marker = L.circleMarker(location, geojsonMarkerOptions).bindPopup(
             `<h3>ID: ${quakeID}</h3>
             <h4>${place}</h4>
