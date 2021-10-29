@@ -41,17 +41,20 @@ function createMarkers(response) {
         // establish empty variable for fillColor
         var fillColor;
 
-        // pick fill color by magnitude
-        if (depth < 10) {fillColor = "9FFF33";}
-        else if (depth >= 10 && depth < 30) {fillColor = "CEFF33"}
-        else if (depth >= 30 && depth < 50) {fillColor = "FFE333"}
-        else if (depth >= 50 && depth < 70) {fillColor = "FFAC33"}
-        else if (depth >= 70 && depth < 90) {fillColor = "FF7A33"}
-        else {fillColor = "FF3333"}
+        // assign fill color by magnitude
+        if (depth < 10) {fillColor = "#9FFF33";}
+        else if (depth >= 10 && depth < 30) {fillColor = "#CEFF33"}
+        else if (depth >= 30 && depth < 50) {fillColor = "#FFE333"}
+        else if (depth >= 50 && depth < 70) {fillColor = "#FFAC33"}
+        else if (depth >= 70 && depth < 90) {fillColor = "#FF7A33"}
+        else {fillColor = "#FF3333"}
+
+        // define marker radius based off magnitude
+        radius = mag * 2.5;
 
         // define marker style options
         var geojsonMarkerOptions = {
-            radius: mag,
+            radius: radius,
             fillColor: fillColor,
             color: "#000",
             weight: 1,
@@ -82,7 +85,7 @@ function quakeMapGen(data, earthquakes) {
     var bBox = data.bbox;
     var centerLng = (bBox[0] + bBox[3]) / 2;
     var centerLat = (bBox[1] + bBox[4]) / 2;
-    var center = [centerLat, centerLng];
+    var center = [centerLng, centerLat];
 
     // Create the base layers.
     var street = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
