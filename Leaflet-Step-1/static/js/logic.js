@@ -85,7 +85,8 @@ function quakeMapGen(data, earthquakes) {
     var bBox = data.bbox;
     var centerLng = (bBox[0] + bBox[3]) / 2;
     var centerLat = (bBox[1] + bBox[4]) / 2;
-    var center = [centerLng, centerLat];
+    var center = [centerLat, centerLng];
+    console.log(center);
 
     // Create the base layers.
     var street = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -110,7 +111,7 @@ function quakeMapGen(data, earthquakes) {
     // Create our map, giving it the streetmap and earthquakes layers to display on load.
     var myMap = L.map("map", {
       center: center,
-      zoom: 5,
+      zoom: 3,
       layers: [street, earthquakes]
     });
   
