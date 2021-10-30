@@ -9,6 +9,7 @@ d3.json(url).then(function(data) {
     createMarkers(data);
 });
 
+// define marker creation function
 function createMarkers(response) {
     // pull out features
     var features = response.features;
@@ -64,6 +65,7 @@ function createMarkers(response) {
     // create a layergroup from the quakeMarkers and pass it to the map gen function
     var earthquakes = L.layerGroup(quakeMarkers);
 
+    // also pass in json data to be able to access map coordinates
     quakeMapGen(response, earthquakes);
 }
 
@@ -109,6 +111,29 @@ function quakeMapGen(data, earthquakes) {
     L.control.layers(baseMaps, overlayMaps, {
       collapsed: false
     }).addTo(myMap);
+
+    // define list of magnitude colors for use in legend
+    colorList = ["#9FFF33", "#CEFF33", "#FFE333", "#FFAC33", "#FF7A33", "#FF3333"];
   
+    // add legend
+    var legend = L.control({position: 'bottomright'});
+    legend.onAdd = function (map) {
+        // define the legend elements
+        var div = L.DomUtil.create('div', 'info legend');
+        labels = ['<strong>Depth</strong>'];
+        categories = ['-10 to 10','10 to 30','30 to 50','50 to 70','70 to 90', '90+'];
+        //iterate through categories and colors to create legend entries
+        for (var i = 0; i < categories.length; i++) {
+
+                div.innerHTML += 
+                labels.push(
+                    '<i class="circle" style="background:' + `${colorList[i]}` + '"></i> ' +
+                (categories[i] ? categories[i] : '+'));
+
+            }
+        div.innerHTML = labels.join('<br>');
+        return div;
+    };
+    legend.addTo(myMap);
   
 }
