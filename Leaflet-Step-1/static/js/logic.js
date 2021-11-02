@@ -56,7 +56,11 @@ function createMarkers(response) {
             `<h3>ID: ${quakeID}</h3>
             <h4>${place}</h4>
             <hr>
-            <p>${time}</p>`
+            <p>${time}</p>
+            <hr>
+            <p>Coordinates: ${location}</p>
+            <p>Depth: ${depth}</p>
+            <p>Magnitude: ${mag}</p>`
         );
         // push marker to marker list
         quakeMarkers.push(marker);
